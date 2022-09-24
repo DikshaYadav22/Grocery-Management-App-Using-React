@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import text from "./components/data";
+import "./App.css";
+import { Card, Button , CardHeader, CardBody} from "reactstrap";
 
-function App() {
+const App = () => {
+  const[inputHandler, setInputHandler] = useState("");
+  const [lists, setLists] = useState([]);
+
+  const submitHandler = (e) =>
+  {
+    e.preventDefault();
+    setLists([...lists, inputHandler]);
+
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <>
+      <h3>Grocery Bud</h3>
+      <form>
+        <input type="text" 
+          value={inputHandler} 
+          onChange={(e)=>setInputHandler(e.target.value)}
+          placeholder="Enter a grocery item" />
 
+          <Button color="success" onClick={(e)=>submitHandler(e)}>Add Grocery</Button>
+
+          <Card className="m-5">
+            <CardHeader>Grocery Lists</CardHeader>
+            <CardBody>
+              {
+                lists?.map((list, i)=>{
+                  return(<div key={i}>{list}</div>)
+                })
+              }
+            </CardBody>
+          </Card>
+      </form>
+    </>
+  );
+};
 export default App;

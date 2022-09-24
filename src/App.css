@@ -1,3 +1,23 @@
+.main-section
+{
+  display: flex;
+  justify-content: center;
+}
+
+.sub-section
+{
+
+}
+
+.img-responsive
+{
+  border-radius: 50%;
+}
+
+
+
+
+
 .App {
   text-align: center;
 }
