@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import text from "./components/data";
 import "./App.css";
 import { Card, Button, CardHeader, CardBody } from "reactstrap";
+import {FiEdit} from 'react-icons/fi';
+import {AiFillDelete} from 'react-icons/ai';
+import { editableInputTypes } from "@testing-library/user-event/dist/utils";
 
 const getStorageData = () => {
   let data = JSON.parse(localStorage.getItem("items"));
@@ -23,6 +26,23 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("items", JSON.stringify(lists));
   }, [lists]);
+
+  function inputChange(e){
+
+    setInputHandler(e.target.value);
+    
+    }
+
+  const deleteList = (i) => 
+  { 
+    const filteredItem = lists.filter((list, index)=>
+    {
+      return index !== i;
+    });
+
+    setLists(filteredItem);
+    
+  }
   return (
     <>
       <h3>Grocery Bud</h3>
@@ -30,7 +50,7 @@ const App = () => {
         <input
           type="text"
           value={inputHandler}
-          onChange={(e) => setInputHandler(e.target.value)}
+          onChange={inputChange}
           placeholder="Enter a grocery item"
         />
 
@@ -42,7 +62,11 @@ const App = () => {
           <CardHeader>Grocery Lists</CardHeader>
           <CardBody>
             {lists?.map((list, i) => {
-              return <div key={i}>{list}</div>;
+              return <div key={i}>
+                {list}
+              <Button><FiEdit /></Button>
+              <Button onClick={()=>deleteList(i)}><AiFillDelete /></Button>
+              </div>;
             })}
           </CardBody>
         </Card>
